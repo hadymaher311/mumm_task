@@ -1,11 +1,11 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ $article->subject }} <a href="{{ route('article.edit', $article->id) }}" class="btn btn-warning btn-sm float-right">Edit</a></div>
+                <div class="card-header">{{ $article->subject }} <small class="float-right text-success">{{ $article->category->name }}</small></div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -15,6 +15,7 @@
                     @endif
                     
                     {!! $article->body !!}
+
 
                 </div>
             </div>
@@ -31,6 +32,21 @@
                   </span>
                 @endforeach
             </div>
+
+            @auth
+                <form action="{{ route('article.comment', $article->id) }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="">Write your comment</label>
+                        <input type="text" autofocus placeholder="Write your comment..." class="form-control" name="body" value="{{ old('body') }}" required>
+                    </div>
+                    <button class="btn btn-primary">Comment</button>
+                </form>    
+            @else
+                <div>
+                    <a href="{{ route('login') }}">Login to comment on this article</a>
+                </div>
+            @endauth
         </div>
     </div>
 </div>

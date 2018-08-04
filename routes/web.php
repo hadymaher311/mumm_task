@@ -10,9 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::namespace('User')->group(function() {
+	// Main home page
+	Route::get('/', 'ArticleController@home');
 
-Route::get('/', function () {
-    return view('welcome');
+	// get the articles with the category
+	Route::get('/articles/{category?}', 'ArticleController@articles');
+	
+	// show the article
+	Route::get('/article/{article}', 'ArticleController@show');
+
+	// add new comment
+	Route::post('/article/comment/{article}', 'ArticleController@comment')->middleware('auth')->name('article.comment');
 });
 
 Auth::routes();

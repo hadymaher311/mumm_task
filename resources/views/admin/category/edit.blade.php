@@ -13,6 +13,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
+
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger">
+                            {{ $error }}
+                        </div>
+                    @endforeach
                     
                     <form action="{{ route('category.update', $category->id) }}" method="POST">
                         @csrf
