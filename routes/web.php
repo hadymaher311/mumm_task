@@ -37,4 +37,10 @@ Route::namespace('Admin')->group(function() {
 	Route::post('admin/password/reset', 'Auth\ResetPasswordController@reset');
 
 	Route::get('admin/home', 'HomeController@index')->name('admin.home');
+
+	// Article Routes ...
+	Route::resource('admin/article', 'ArticleController')->middleware('auth:admin');
+
+	// Category Routes ...
+	Route::resource('admin/category', 'CategoryController')->middleware('auth:admin');
 });
